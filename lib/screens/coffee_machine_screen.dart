@@ -11,6 +11,39 @@ class _CoffeeMachineScreenState extends State<CoffeeMachineScreen> {
   int beans = 10;
   int water = 100;
 
+  void addWater() {
+    water += 300;
+    setState(() {});
+  }
+
+  void addBeans() {
+    beans += 30;
+    setState(() {});
+  }
+
+  void makeCoffee() {
+    if (beans < 10) {
+      showMessage('Not enough beans, please add them');
+    } else if (water < 100) {
+      showMessage('Not enough water, please add it');
+    } else {
+      beans -= 10;
+      water -= 100;
+      setState(() {});
+      showMessage("Here's your coffee");
+    }
+  }
+
+  void showMessage(String message) {
+    // Hides previous snackBar
+    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,15 +76,21 @@ class _CoffeeMachineScreenState extends State<CoffeeMachineScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  addBeans();
+                },
                 child: const Text('Add beans'),
               ),
               TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  addWater();
+                },
                 child: const Text('Add water'),
               ),
               TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  makeCoffee();
+                },
                 child: const Text('Make coffee'),
               ),
             ],
